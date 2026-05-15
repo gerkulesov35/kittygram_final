@@ -11,7 +11,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    image: ${DOCKERHUB_USERNAME}/kittygram_backend
     env_file: .env
     depends_on:
       - db
@@ -20,14 +20,14 @@ services:
       - media:/app/media
 
   frontend:
+    image: ${DOCKERHUB_USERNAME}/kittygram_frontend
     env_file: .env
-    build: ./frontend
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
 
   gateway:
-    build: ./nginx
+    image: ${DOCKERHUB_USERNAME}/kittygram_gateway
     env_file: .env
     depends_on:
       - backend
